@@ -233,6 +233,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Global.asax.cs" />
+    <Compile Include="App_Code\ClientePresenter.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -264,7 +265,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
-    <Content Include="App_Code\ClientePresenter.cs" />
     <Compile Include="Pages\CadastroCliente.aspx.cs">
       <DependentUpon>CadastroCliente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

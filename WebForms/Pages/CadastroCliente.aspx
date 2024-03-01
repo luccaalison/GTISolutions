@@ -2,6 +2,8 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <asp:Literal ID="lblMensagemErro" runat="server" Visible="false"></asp:Literal>
+
     <h2>Cliente</h2>
         <div class="row">
             <div class="col-md-3">
@@ -57,9 +59,7 @@
                        <label for="cep">CEP*</label>           
                    <div class="input-group">
                     <asp:TextBox ID="cep" runat="server" CssClass="form-control" />
-                     <button type="button" class="btn btn-primary" style="background-color: #2464ac">
-                        <i class="fas fa-search"></i> 
-                    </button>
+                   <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-primary " Style="background-color: #2464ac" OnClick="btnBuscar_Click"  />
                    </div>
                 </div>
                  <div class="col-md-2">
@@ -81,8 +81,7 @@
 
                  <div class="col-md-2">
                     <label for="cidade">Cidade*</label>
-                    <asp:DropDownList ID="cidade" runat="server" CssClass="form-select" />
-                     </asp:DropDownList>
+                    <asp:DropDownList ID="cidade" runat="server" CssClass="form-select" />                   
                 </div>
                  <div class="col-md-1">
                     <label for="uf">UF*</label>

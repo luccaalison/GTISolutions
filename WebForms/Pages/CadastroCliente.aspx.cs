@@ -9,6 +9,9 @@ using System.Web.UI.WebControls;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Net;
+using WCFServiceHost.Models;
+using WebServiceEndereco = WebForm.WCFService.EnderecoCliente;
+using WebServiceCliente = WebForm.WCFService.Cliente;
 
 namespace WebForms.Pages
 {
@@ -17,12 +20,12 @@ namespace WebForms.Pages
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
                 CarregarEstadosAsync().Wait();
-                if (uf.SelectedIndex >0) CarregarCidadesPorEstado(uf.SelectedValue);
+                if (uf.SelectedIndex >0) CarregarCidadesPorEstado(uf.SelectedValue).Wait();
             }
         }
         protected void estado_SelectedIndexChanged(object sender, EventArgs e) {
             if (!string.IsNullOrEmpty(cep.Text)) {
-                CarregarCidadesPorEstado(uf.SelectedValue);
+                CarregarCidadesPorEstado(uf.SelectedValue).Wait();
             }
         }
         protected void btnBuscar_Click(object sender, EventArgs e) {
@@ -32,21 +35,96 @@ namespace WebForms.Pages
         }
         protected void btnCadastrar_Click(object sender, EventArgs e) {
 
+            string campoVazio = GetCampoVazio();
+            if (String.IsNullOrWhiteSpace(campoVazio))
+                {
+                    lblMensagemErro.Text = String.Format("Preencha o campo {0} *", campoVazio);
+                    lblMensagemErro.Visible = true;
+                    return;
+                }
+            else
+            {
+                try
+                {
 
+                    // Crie um objeto EnderecoCliente com os dados do formulário
+                    WebServiceEndereco enderecoCliente = new WebServiceEndereco
+                    {
+                        CEP = cep.Text,
+                        Logradouro = rua.Text,
+                        Numero = numero.Text,
+                        Complemento = complemento.Text,
+                        Bairro = bairro.Text,
+                        Cidade = cidade.SelectedValue,
+                        UF = uf.SelectedValue
+                    };
+
+                    WebServiceCliente novoCliente = new WebServiceCliente
+                    {
+                        CPF = cpf.Text,
+                        Nome = nome.Text,
+                        RG = rg.Text,
+                        DataExpedicao = DateTime.Parse(dtExpedicao.Text),
+                        OrgaoExpedicao = orgExpedicao.SelectedValue,
+                        UF = ufExpedicao.SelectedValue,
+                        DataNascimento = DateTime.Parse(dtNascimento.Text),
+                        Sexo = Sexo.SelectedValue,
+                        EstadoCivil = estCivil.SelectedValue,
+                        Endereco = enderecoCliente 
+                    };
+
+                    ClientePresenter clientePresenter = new ClientePresenter();
+
+                    clientePresenter.AdicionarCliente(novoCliente);
+
+                    lblMensagemErro.Text = "Cliente cadastrado com sucesso!";
+                    lblMensagemErro.Visible = true;
+                }
+                catch (Exception ex)
+                {
+                    // Em caso de erro, exiba uma mensagem de erro
+                    lblMensagemErro.Text = $"Erro ao cadastrar o cliente: {ex.Message}";
+                    lblMensagemErro.Visible = true;
+                }
+
+
+            }
         }
+
+        private string GetCampoVazio()
+        {
+            if (string.IsNullOrWhiteSpace(cpf.Text)) return "CPF";
+            if (string.IsNullOrWhiteSpace(nome.Text)) return "Nome";
+            if (string.IsNullOrWhiteSpace(rg.Text)) return "RG";
+            if (string.IsNullOrWhiteSpace(dtExpedicao.Text)) return "Data de Expedição";
+            if (string.IsNullOrWhiteSpace(orgExpedicao.SelectedValue)) return "Órgão de Expedição";
+            if (string.IsNullOrWhiteSpace(ufExpedicao.SelectedValue)) return "UF de Expedição";
+            if (string.IsNullOrWhiteSpace(dtNascimento.Text)) return "Data de Nascimento";
+            if (string.IsNullOrWhiteSpace(Sexo.SelectedValue)) return "Sexo";
+            if (string.IsNullOrWhiteSpace(estCivil.SelectedValue)) return "Estado Civil";
+            if (string.IsNullOrWhiteSpace(cep.Text)) return "CEP";
+            if (string.IsNullOrWhiteSpace(rua.Text)) return "Rua";
+            if (string.IsNullOrWhiteSpace(numero.Text)) return "Número";
+            if (string.IsNullOrWhiteSpace(bairro.Text)) return "Bairro";
+            if (string.IsNullOrWhiteSpace(cidade.SelectedValue)) return "Cidade";
+            if (string.IsNullOrWhiteSpace(uf.SelectedValue)) return "UF";
+
+            return string.Empty;
+        }
+
         protected void CarregarDadosPorCEP(string cep) {
             ViaCEPService viaCEPService = new ViaCEPService();
-            ViaCEPResponse viaCepResponse = viaCEPService.ConsultarCEP(cep).Result;
-
+            ViaCEPResponse viaCepResponse =  viaCEPService.ConsultarCEP(cep).Result;
+            
             if (viaCepResponse != null) {
-                // Preencha os controles (rua, cidade, estado, etc.) com os dados obtidos do ViaCEPResponse.
+
+                CarregarCidadesPorEstado(viaCepResponse.UF).Wait();
+
                 rua.Text = viaCepResponse.Logradouro;
                 bairro.Text = viaCepResponse.Bairro;
                 cidade.Text = viaCepResponse.Localidade;
                 uf.SelectedValue = viaCepResponse.UF;
 
-                // Chame a função para carregar as cidades do estado
-                CarregarCidadesPorEstado(viaCepResponse.UF);
             }
         }
 
@@ -95,7 +173,7 @@ namespace WebForms.Pages
                         }
                     }
                     catch (Exception ex) {
-                        return null;
+                        throw ex;
                     }
                 }
             }
@@ -108,7 +186,7 @@ namespace WebForms.Pages
 
                 if (estados != null && estados.Any()) {
                     uf.DataSource = estados;
-                    uf.DataTextField = "Nome";
+                    uf.DataTextField = "Sigla";
                     uf.DataValueField = "Sigla";
                     uf.DataBind();
                 }
@@ -117,17 +195,27 @@ namespace WebForms.Pages
                 }
             }
             catch (Exception ex) {
-
+                throw ex;
             }
         }
-        protected async void CarregarCidadesPorEstado(string uf) {
+        protected async Task CarregarCidadesPorEstado(string uf)
+        {
             var viaCEPService = new ViaCEPService();
             var cidades = await viaCEPService.ObterCidadesPorEstado(uf);
 
             cidade.Items.Clear();
 
-            foreach (var cidadeNome in cidades) {
+            foreach (var cidadeNome in cidades)
+            {
                 cidade.Items.Add(new ListItem(cidadeNome, cidadeNome));
+            }
+        }
+
+        protected void uf_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(uf.SelectedValue))
+            {
+                CarregarCidadesPorEstado(uf.SelectedValue).Wait();
             }
         }
 
@@ -137,10 +225,10 @@ namespace WebForms.Pages
             public async Task<List<string>> ObterCidadesPorEstado(string uf) {
                 try {
                     using (var httpClient = new HttpClient()) {
-                        var response = await httpClient.GetStringAsync($"{ViaCEPBaseUrl}{uf}/json/");
-                        var cidades = JsonConvert.DeserializeObject<List<ViaCEPCidade>>(response);
+                        var response = await httpClient.GetStringAsync($"https://servicodados.ibge.gov.br/api/v1/localidades/estados/{uf}/municipios");
+                        var cidades = JsonConvert.DeserializeObject<List<IBGECidade>>(response);
 
-                        return cidades.ConvertAll(c => c.Localidade);
+                        return cidades.ConvertAll(c => c.Nome);
                     }
                 }
                 catch (Exception ex) {
@@ -180,6 +268,11 @@ namespace WebForms.Pages
         {
             [JsonProperty("localidade")]
             public string Localidade { get; set; }
+        }
+        public class IBGECidade
+        {
+            [JsonProperty("nome")]
+            public string Nome { get; set; }
         }
     }
 }

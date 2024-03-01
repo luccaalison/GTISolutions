@@ -21,7 +21,7 @@ namespace WCFServiceHost.Models
 
         public string OrgaoExpedicao { get; set; }
 
-        public string UF { get; set; }
+        public string UFExpedicao { get; set; }
 
         public DateTime DataNascimento { get; set; }
 
