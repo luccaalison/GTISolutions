@@ -29,8 +29,6 @@ namespace WebForm.WCFService {
     [System.Web.Services.WebServiceBindingAttribute(Name="BasicHttpBinding_IService", Namespace="http://tempuri.org/")]
     public partial class ServiceImplementation : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
-        private System.Threading.SendOrPostCallback GetDataOperationCompleted;
-        
         private System.Threading.SendOrPostCallback ObterClientesOperationCompleted;
         
         private System.Threading.SendOrPostCallback AdicionarClienteOperationCompleted;
@@ -80,9 +78,6 @@ namespace WebForm.WCFService {
         }
         
         /// <remarks/>
-        public event GetDataCompletedEventHandler GetDataCompleted;
-        
-        /// <remarks/>
         public event ObterClientesCompletedEventHandler ObterClientesCompleted;
         
         /// <remarks/>
@@ -96,38 +91,6 @@ namespace WebForm.WCFService {
         
         /// <remarks/>
         public event BuscarClientePorCPFCompletedEventHandler BuscarClientePorCPFCompleted;
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IService/GetData", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public string GetData(int value, [System.Xml.Serialization.XmlIgnoreAttribute()] bool valueSpecified) {
-            object[] results = this.Invoke("GetData", new object[] {
-                        value,
-                        valueSpecified});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetDataAsync(int value, bool valueSpecified) {
-            this.GetDataAsync(value, valueSpecified, null);
-        }
-        
-        /// <remarks/>
-        public void GetDataAsync(int value, bool valueSpecified, object userState) {
-            if ((this.GetDataOperationCompleted == null)) {
-                this.GetDataOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetDataOperationCompleted);
-            }
-            this.InvokeAsync("GetData", new object[] {
-                        value,
-                        valueSpecified}, this.GetDataOperationCompleted, userState);
-        }
-        
-        private void OnGetDataOperationCompleted(object arg) {
-            if ((this.GetDataCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetDataCompleted(this, new GetDataCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IService/ObterClientes", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -311,13 +274,9 @@ namespace WebForm.WCFService {
         
         private bool clienteIdFieldSpecified;
         
-        private System.DateTime dataExpedicaoField;
+        private string dataExpedicaoField;
         
-        private bool dataExpedicaoFieldSpecified;
-        
-        private System.DateTime dataNascimentoField;
-        
-        private bool dataNascimentoFieldSpecified;
+        private string dataNascimentoField;
         
         private EnderecoCliente enderecoField;
         
@@ -331,7 +290,7 @@ namespace WebForm.WCFService {
         
         private string sexoField;
         
-        private string ufField;
+        private string uFExpedicaoField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
@@ -366,7 +325,8 @@ namespace WebForm.WCFService {
         }
         
         /// <remarks/>
-        public System.DateTime DataExpedicao {
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string DataExpedicao {
             get {
                 return this.dataExpedicaoField;
             }
@@ -376,34 +336,13 @@ namespace WebForm.WCFService {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool DataExpedicaoSpecified {
-            get {
-                return this.dataExpedicaoFieldSpecified;
-            }
-            set {
-                this.dataExpedicaoFieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
-        public System.DateTime DataNascimento {
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string DataNascimento {
             get {
                 return this.dataNascimentoField;
             }
             set {
                 this.dataNascimentoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool DataNascimentoSpecified {
-            get {
-                return this.dataNascimentoFieldSpecified;
-            }
-            set {
-                this.dataNascimentoFieldSpecified = value;
             }
         }
         
@@ -475,12 +414,12 @@ namespace WebForm.WCFService {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public string UF {
+        public string UFExpedicao {
             get {
-                return this.ufField;
+                return this.uFExpedicaoField;
             }
             set {
-                this.ufField = value;
+                this.uFExpedicaoField = value;
             }
         }
     }
@@ -606,32 +545,6 @@ namespace WebForm.WCFService {
             }
             set {
                 this.ufField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    public delegate void GetDataCompletedEventHandler(object sender, GetDataCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
             }
         }
     }

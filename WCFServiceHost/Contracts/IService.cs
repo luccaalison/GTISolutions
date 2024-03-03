@@ -8,9 +8,6 @@ namespace WCFServiceHost.Contracts
     public interface IService
     {
         [OperationContract]
-        string GetData(int value);
-
-        [OperationContract]
         List<Cliente> ObterClientes();
 
         [OperationContract]

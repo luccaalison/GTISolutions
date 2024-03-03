@@ -10,15 +10,15 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="CPF" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ClienteId" type="xs:int" />
-      <xs:element minOccurs="0" name="DataExpedicao" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="DataNascimento" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DataExpedicao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataNascimento" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Endereco" nillable="true" type="tns:EnderecoCliente" />
       <xs:element minOccurs="0" name="EstadoCivil" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Nome" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="OrgaoExpedicao" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="RG" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Sexo" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="UF" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UFExpedicao" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Cliente" nillable="true" type="tns:Cliente" />

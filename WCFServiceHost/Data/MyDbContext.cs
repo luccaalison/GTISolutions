@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.Entity;
 using WCFServiceHost.Models;
 
+
 namespace WCFServiceHost.Data
 {
     public class MyDbContext : DbContext

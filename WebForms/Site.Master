@@ -39,16 +39,16 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" runat="server" href="~/">Página Inicial</a>
+                            <a class="nav-link" runat="server" href="~/Index.aspx">Página Inicial</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" runat="server" href="~/Cadastrar">Cadastrar</a>
+                            <a class="nav-link" runat="server" href="~/Pages/CadastroCliente.aspx">Cadastrar</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" runat="server" href="~/Excluir">Excluir</a>
+                            <a class="nav-link" runat="server" href="~/Pages/ExcluirClientes.aspx">Excluir</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" runat="server" href="~/Atualizar">Atualizar</a>
+                            <a class="nav-link" runat="server" href="~/Pages/AtualizarClientes.aspx">Atualizar</a>
                         </li>
                     </ul>
                 </div>

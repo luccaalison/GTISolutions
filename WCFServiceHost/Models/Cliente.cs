@@ -17,13 +17,13 @@ namespace WCFServiceHost.Models
 
         public string RG { get; set; }
 
-        public DateTime DataExpedicao { get; set; }
+        public string DataExpedicao { get; set; }
 
         public string OrgaoExpedicao { get; set; }
 
         public string UFExpedicao { get; set; }
 
-        public DateTime DataNascimento { get; set; }
+        public string DataNascimento { get; set; }
 
         public string Sexo { get; set; }
 

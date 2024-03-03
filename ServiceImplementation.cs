@@ -25,9 +25,9 @@ namespace WCFServiceHost.Models
         
         private int ClienteIdField;
         
-        private System.DateTime DataExpedicaoField;
+        private string DataExpedicaoField;
         
-        private System.DateTime DataNascimentoField;
+        private string DataNascimentoField;
         
         private WCFServiceHost.Models.EnderecoCliente EnderecoField;
         
@@ -41,7 +41,7 @@ namespace WCFServiceHost.Models
         
         private string SexoField;
         
-        private string UFField;
+        private string UFExpedicaoField;
         
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData
         {
@@ -82,7 +82,7 @@ namespace WCFServiceHost.Models
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime DataExpedicao
+        public string DataExpedicao
         {
             get
             {
@@ -95,7 +95,7 @@ namespace WCFServiceHost.Models
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime DataNascimento
+        public string DataNascimento
         {
             get
             {
@@ -186,15 +186,15 @@ namespace WCFServiceHost.Models
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UF
+        public string UFExpedicao
         {
             get
             {
-                return this.UFField;
+                return this.UFExpedicaoField;
             }
             set
             {
-                this.UFField = value;
+                this.UFExpedicaoField = value;
             }
         }
     }
@@ -347,12 +347,6 @@ namespace WCFServiceHost.Models
 public interface IService
 {
     
-    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetData", ReplyAction="http://tempuri.org/IService/GetDataResponse")]
-    string GetData(int value);
-    
-    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetData", ReplyAction="http://tempuri.org/IService/GetDataResponse")]
-    System.Threading.Tasks.Task<string> GetDataAsync(int value);
-    
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ObterClientes", ReplyAction="http://tempuri.org/IService/ObterClientesResponse")]
     WCFServiceHost.Models.Cliente[] ObterClientes();
     
@@ -364,6 +358,24 @@ public interface IService
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/AdicionarCliente", ReplyAction="http://tempuri.org/IService/AdicionarClienteResponse")]
     System.Threading.Tasks.Task AdicionarClienteAsync(WCFServiceHost.Models.Cliente cliente);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/EditarCliente", ReplyAction="http://tempuri.org/IService/EditarClienteResponse")]
+    void EditarCliente(int clienteId, WCFServiceHost.Models.Cliente clienteAtualizado);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/EditarCliente", ReplyAction="http://tempuri.org/IService/EditarClienteResponse")]
+    System.Threading.Tasks.Task EditarClienteAsync(int clienteId, WCFServiceHost.Models.Cliente clienteAtualizado);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ExcluirCliente", ReplyAction="http://tempuri.org/IService/ExcluirClienteResponse")]
+    void ExcluirCliente(int clienteId);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ExcluirCliente", ReplyAction="http://tempuri.org/IService/ExcluirClienteResponse")]
+    System.Threading.Tasks.Task ExcluirClienteAsync(int clienteId);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/BuscarClientePorCPF", ReplyAction="http://tempuri.org/IService/BuscarClientePorCPFResponse")]
+    WCFServiceHost.Models.Cliente BuscarClientePorCPF(string cpf);
+    
+    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/BuscarClientePorCPF", ReplyAction="http://tempuri.org/IService/BuscarClientePorCPFResponse")]
+    System.Threading.Tasks.Task<WCFServiceHost.Models.Cliente> BuscarClientePorCPFAsync(string cpf);
 }
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -400,16 +412,6 @@ public partial class ServiceClient : System.ServiceModel.ClientBase<IService>, I
     {
     }
     
-    public string GetData(int value)
-    {
-        return base.Channel.GetData(value);
-    }
-    
-    public System.Threading.Tasks.Task<string> GetDataAsync(int value)
-    {
-        return base.Channel.GetDataAsync(value);
-    }
-    
     public WCFServiceHost.Models.Cliente[] ObterClientes()
     {
         return base.Channel.ObterClientes();
@@ -428,5 +430,35 @@ public partial class ServiceClient : System.ServiceModel.ClientBase<IService>, I
     public System.Threading.Tasks.Task AdicionarClienteAsync(WCFServiceHost.Models.Cliente cliente)
     {
         return base.Channel.AdicionarClienteAsync(cliente);
+    }
+    
+    public void EditarCliente(int clienteId, WCFServiceHost.Models.Cliente clienteAtualizado)
+    {
+        base.Channel.EditarCliente(clienteId, clienteAtualizado);
+    }
+    
+    public System.Threading.Tasks.Task EditarClienteAsync(int clienteId, WCFServiceHost.Models.Cliente clienteAtualizado)
+    {
+        return base.Channel.EditarClienteAsync(clienteId, clienteAtualizado);
+    }
+    
+    public void ExcluirCliente(int clienteId)
+    {
+        base.Channel.ExcluirCliente(clienteId);
+    }
+    
+    public System.Threading.Tasks.Task ExcluirClienteAsync(int clienteId)
+    {
+        return base.Channel.ExcluirClienteAsync(clienteId);
+    }
+    
+    public WCFServiceHost.Models.Cliente BuscarClientePorCPF(string cpf)
+    {
+        return base.Channel.BuscarClientePorCPF(cpf);
+    }
+    
+    public System.Threading.Tasks.Task<WCFServiceHost.Models.Cliente> BuscarClientePorCPFAsync(string cpf)
+    {
+        return base.Channel.BuscarClientePorCPFAsync(cpf);
     }
 }

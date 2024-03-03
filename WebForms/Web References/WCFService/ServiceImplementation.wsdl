@@ -7,12 +7,6 @@
       <xsd:import schemaLocation="http://localhost:52801/Services/ServiceImplementation.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WCFServiceHost.Models" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IService_GetData_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetData" />
-  </wsdl:message>
-  <wsdl:message name="IService_GetData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataResponse" />
-  </wsdl:message>
   <wsdl:message name="IService_ObterClientes_InputMessage">
     <wsdl:part name="parameters" element="tns:ObterClientes" />
   </wsdl:message>
@@ -44,10 +38,6 @@
     <wsdl:part name="parameters" element="tns:BuscarClientePorCPFResponse" />
   </wsdl:message>
   <wsdl:portType name="IService">
-    <wsdl:operation name="GetData">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetData" message="tns:IService_GetData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetDataResponse" message="tns:IService_GetData_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="ObterClientes">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/ObterClientes" message="tns:IService_ObterClientes_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService/ObterClientesResponse" message="tns:IService_ObterClientes_OutputMessage" />
@@ -71,15 +61,6 @@
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService" type="tns:IService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetData">
-      <soap:operation soapAction="http://tempuri.org/IService/GetData" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="ObterClientes">
       <soap:operation soapAction="http://tempuri.org/IService/ObterClientes" style="document" />
       <wsdl:input>

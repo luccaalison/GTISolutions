@@ -29,7 +29,7 @@ namespace WebForms
             _servicoWCF.AdicionarCliente(cliente);
         }
 
-        public void EditarCliente(int clienteId, Cliente clienteAtualizado)
+        public void EditarCliente(int clienteId,  Cliente clienteAtualizado)
         {
             _servicoWCF.EditarCliente(clienteId, false, clienteAtualizado);
         }
