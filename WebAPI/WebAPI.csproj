@@ -332,8 +332,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\UnityConfig.cs" />
-    <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\EnderecoClienteController.cs" />
@@ -350,6 +348,10 @@
     <Compile Include="Migrations\202402282136285_Initial.cs" />
     <Compile Include="Migrations\202402282136285_Initial.designer.cs">
       <DependentUpon>202402282136285_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202403040057161_update.cs" />
+    <Compile Include="Migrations\202403040057161_update.designer.cs">
+      <DependentUpon>202403040057161_update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -381,6 +383,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202402282136285_Initial.resx">
       <DependentUpon>202402282136285_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403040057161_update.resx">
+      <DependentUpon>202403040057161_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

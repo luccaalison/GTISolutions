@@ -147,18 +147,6 @@
     <Compile Include="Contracts\IService.cs" />
     <Compile Include="Data\MyDbContext.cs" />
     <Compile Include="Helpers\HelperBancoDeDados.cs" />
-    <Compile Include="Migrations\202403011924555_initial.cs" />
-    <Compile Include="Migrations\202403011924555_initial.designer.cs">
-      <DependentUpon>202403011924555_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202403012048473_UpdateTableClientes.cs" />
-    <Compile Include="Migrations\202403012048473_UpdateTableClientes.designer.cs">
-      <DependentUpon>202403012048473_UpdateTableClientes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202403012149140_AtualizacaoData.cs" />
-    <Compile Include="Migrations\202403012149140_AtualizacaoData.designer.cs">
-      <DependentUpon>202403012149140_AtualizacaoData.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\EnderecoCliente.cs" />
@@ -177,17 +165,6 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202403011924555_initial.resx">
-      <DependentUpon>202403011924555_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202403012048473_UpdateTableClientes.resx">
-      <DependentUpon>202403012048473_UpdateTableClientes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202403012149140_AtualizacaoData.resx">
-      <DependentUpon>202403012149140_AtualizacaoData.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
